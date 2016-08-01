@@ -5,17 +5,17 @@
 
 ## Yeni kullanıcı oluşturulması
 
-    $ sudo groupadd tomcat
+    $ groupadd tomcat
 
-    $ sudo useradd -g tomcat -d /home/tomcat -s /bin/sh tomcat
+    $ useradd -g tomcat -d /home/tomcat -s /bin/sh tomcat
 
 ## JDK 8 Kurulumu
 
-    $ sudo add-apt-repository ppa:webupd8team/java
+    $ add-apt-repository ppa:webupd8team/java
 
-    $ sudo apt-get update
+    $ apt-get update
 
-    $ sudo apt-get install oracle-java8-installer
+    $ apt-get install oracle-java8-installer
 
 ## JDK Versiyon Kontrolü
 
@@ -23,7 +23,7 @@
 
 ## Java Ortam Değişkenlerinin Konfigüre Edilmesi
 
-    $ sudo apt-get install oracle-java8-set-default
+    $ apt-get install oracle-java8-set-default
 
 ## Tomcat İndirilmesi
 
@@ -201,7 +201,7 @@ _autoDeploy=&quot;false&quot;_
 
 Son kullanıcılara detaylı hata mesajları (stacktrace) gönderilmesini engellemek amacı **$CATALINA\_HOME/conf/web.xml** dosyasında error‐page direktiflerinin kullanılması gerekmektedir.
 
-    $ /opt/tomcat/webapps/ROOT/error.jsp
+    $ nano /opt/tomcat/webapps/ROOT/error.jsp
 
 _&lt;html&gt;_
 
@@ -217,7 +217,7 @@ _&lt;/html&gt;_
 
 Hata sayfasının eklenmesi;
 
-    $ /opt/tomcat/conf/web.xml
+    $ nano /opt/tomcat/conf/web.xml
 
 _&lt;error-page&gt;_
 
@@ -352,3 +352,123 @@ _&lt;role-name&gt;manager&lt;/role-name&gt;_
 _&lt;/auth-constraint&gt;_
 
 _&lt;/security-constraint&gt;_
+
+##Tomcat Servisinin Eklenmesi
+
+    $ nano /etc/init.d/tomcat
+    
+#!/bin/bash
+# description: Tomcat Start Stop Restart
+# processname: tomcat
+# chkconfig: 234 20 80
+JAVA_HOME=/usr/java/jdk1.8.0_45
+export JAVA_HOME
+PATH=$JAVA_HOME/bin:$PATH
+export PATH
+CATALINA_HOME=/opt/tomcat/bin
+case $1 in
+start)
+/bin/su tomcat $CATALINA_HOME/startup.sh
+;;
+stop)
+/bin/su tomcat $CATALINA_HOME/shutdown.sh
+;;
+restart)
+/bin/su tomcat $CATALINA_HOME/shutdown.sh
+/bin/su tomcat $CATALINA_HOME/startup.sh
+;;
+esac
+exit 0
+
+    $ chmod 755 /etc/init.d/tomcat
+
+Servisi başlangıçta çalıştırmak için:
+
+    $ chkconfig tomcat on
+    $ service tomcat start
+
+##IP Tabloları Konfigürasyonu
+
+    $service iptables stop
+    $iptables -P INPUT DROP
+    $iptables -A INPUT -i lo -j ACCEPT
+    $iptables -A OUTPUT -o lo -j ACCEPT
+    $iptables -A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT
+
+SSH için izinlerin verilmesi
+
+    $ iptables -A INPUT -m state --state NEW -p tcp --dport 22 -s 10.0.0.0/8 -j ACCEPT
+    $ iptables -A INPUT -m state --state NEW -p tcp --dport 8080 -i eth0 -j ACCEPT
+    $ service iptables save
+
+10.0.0.0/8 'i internat segment ve subnet mask'ı ile değiştirin. 
+    
+
+##SSL Konfigürasyonu
+
+###SSL sertifikaları için dosya oluşturulması:
+
+    $ mkdir -p /opt/tomcat/ssl
+    $ chown -R tomcat:tomcat /opt/tomcat/ssl
+    $ chmod -R 755 /opt/tomcat/ssl
+
+Key store oluşturlması:
+
+    $ /usr/java/jdk1.8.0_45/bin/keytool -genkey -keyalg RSA -sigalg SHA256withRSA -keysize 2048 -keystore /opt/tomcat/ssl/server.key -storepass PSWD -validity 1095 -alias "FQDN_Name"
+    
+Sertifika isteği oluşturulması:
+    
+    $ /usr/java/jdk1.8.0_45/bin/keytool -certreq -keyalg "RSA" -file /tmp/tomcat.csr -keystore /opt/tomcat/ssl/server.key -storepass PSWD -alias "FQDN_Name"
+
+İmzalı public key:
+
+    $ /usr/java/jdk1.8.0_45/bin/keytool -import -keystore /opt/tomcat/ssl/server.key -storepass ComplexPassword -trustcacerts -file /opt/tomcat/ssl/server.crt
+
+Sunucu konfügirasyonunda gereken değişikliklerin eklenmesi:
+ 
+    $ nano /opt/tomcat/conf/server.xml
+
+<Connector port="8443"
+protocol="HTTP/1.1"
+maxThreads="150"
+xpoweredBy="false"
+allowTrace="false"
+SSLEnabled="true"
+scheme="https"
+secure="true"
+keystoreFile="/opt/tomcat/ssl/server.key"
+keystorePass="ComplexPassword"
+keyAlias="FQDN_Name"
+clientAuth="false"
+ciphers="TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384,TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384,TLS_ECDH_RSA_WITH_AES_256_GCM_SHA384,TLS_ECDH_ECDSA_WITH_AES_256_GCM_SHA384,TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256,TLS_ECDH_RSA_WITH_AES_128_GCM_SHA256,TLS_ECDH_ECDSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384,TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384,TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA,TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA,TLS_ECDH_RSA_WITH_AES_256_CBC_SHA384,TLS_ECDH_ECDSA_WITH_AES_256_CBC_SHA384,TLS_ECDH_RSA_WITH_AES_256_CBC_SHA,TLS_ECDH_ECDSA_WITH_AES_256_CBC_SHA,TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256,TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256,TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA,TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA,TLS_ECDH_RSA_WITH_AES_128_CBC_SHA256,TLS_ECDH_ECDSA_WITH_AES_128_CBC_SHA256,TLS_ECDH_RSA_WITH_AES_128_CBC_SHA,TLS_ECDH_ECDSA_WITH_AES_128_CBC_SHA,TLS_ECDHE_RSA_WITH_3DES_EDE_CBC_SHA,TLS_ECDHE_ECDSA_WITH_3DES_EDE_CBC_SHA,TLS_ECDH_RSA_WITH_3DES_EDE_CBC_SHA,TLS_ECDH_ECDSA_WITH_3DES_EDE_CBC_SHA"
+sslEnabledProtocols="TLSv1,TLSv1.1,TLSv1.2" />
+
+PSWD yerine kendi şifrenizi giriniz.
+FQDN_Name yerine sunucu DNS ismini giriniz.
+
+web.xml'e eklenmesi:
+    $ nano /opt/tomcat/conf/web.xml
+    
+<user-data-constraint>
+<description>
+Constrain the user data transport for the whole application
+</description>
+<transport-guarantee>CONFIDENTIAL</transport-guarantee>
+</user-data-constraint>
+    
+web.app tag'i içerisinde olması gerekiyor.
+
+    $ nano /opt/tomcat/conf/context.xml
+
+Aşşağıdaki parametreyi ekleyiniz.
+
+usehttponly="true"
+
+ HTTP (Port 8080TCP) internet erişimin verilmesi: 
+
+    $ iptables -A INPUT -m state --state NEW -p tcp --dport 8443 -i eth0 -j ACCEPT
+    $ service iptables save
+    $ service tomcat start
+
+
+
