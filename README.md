@@ -130,19 +130,19 @@ Sunucuya yapılan HTTP isteklerine dönen cevaplarda bulunan HTTP başlıkların
 
 Aşağıdaki server değerleri
 
-_server.infoerver.info=Apache Tomcat/8.5.4_
+> server.infoerver.info=Apache Tomcat/8.5.4
 
-_server.number=8.5.4.0_
+> server.number=8.5.4.0
 
-_server.built=Mar 23 2015 14:11:21 UTC_
+> server.built=Mar 23 2015 14:11:21 UTC
 
 Bu değerler ile değiştirilmeli
 
-_server.infoerver.info=Secure Web server_
+> server.infoerver.info=Secure Web server
 
-_server.number=1.0.0.0_
+> server.number=1.0.0.0
 
-_server.built=Jan 01 2000 00:00:00 UTC_
+> server.built=Jan 01 2000 00:00:00 UTC
 
 Bu adımdaki amaç, sistemde kurulu Apache Tomcat servisinin HTTP/S cevaplarında HTTP
 başlıklarında veya hata sayfalarında detaylı versiyon bilgisi sızdırıp sızdırmadığını kontrol
