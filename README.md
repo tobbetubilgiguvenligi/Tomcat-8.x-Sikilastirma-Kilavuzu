@@ -65,37 +65,23 @@ Tomcat servisinin home dizini bulunduktan sonra, $CATALINA\_HOME dizini altında
 
 Ayrıca,
 
-• $CATALINA\_HOME/conf dizinine sadece okuma ve çalıştırma (500), bu dizinin
+*   $CATALINA\_HOME/conf dizinine sadece okuma ve çalıştırma (500), bu dizinin içindekilere ise sadece okuma (400)
 
-içindekilere ise sadece okuma (400)
+*   $CATALINA\_HOME/logs ve içindekilere dizinine sadece okuma/yazma ve çalıştırma (700) haklarının (eğer log dosyaları okunmayacaksa, 300)
 
-• $CATALINA\_HOME/logs ve içindekilere dizinine sadece okuma/yazma ve çalıştırma
-
-(700) haklarının (eğer log dosyaları okunmayacaksa, 300)
-
-• Son olarak tomcat kullanıcısına /tmp (veya $CATALINA\_HOME/temp) dizinine ve
-
-içindekilere sadece okuma ve yazma (600) hakkı verilmelidir.
+*   Son olarak tomcat kullanıcısına /tmp (veya $CATALINA\_HOME/temp) dizinine ve içindekilere sadece okuma ve yazma (600) hakkı verilmelidir.
 
 Alternatif olarak yukarıdaki izinleri standartlara biraz daha yaklaştırmak gerekirse,
 
-• $CATALINA\_HOME/ dizini altında her maddenin (dosya/dizin) sahipleri root:tomcat
+*   $CATALINA\_HOME/ dizini altında her maddenin (dosya/dizin) sahipleri root:tomcat
 
-• $CATALINA\_HOME/ dizini altındaki bütün dizinlere, sahibi ve grubu için okuma ve
+*   $CATALINA\_HOME/ dizini altındaki bütün dizinlere, sahibi ve grubu için okuma ve çalıştırma (550)
 
-çalıştırma (550)
+*   $CATALINA\_HOME/ dizini altındaki bütün dosyalara, sahibi ve grubu için okuma (440)
 
-• $CATALINA\_HOME/ dizini altındaki bütün dosyalara, sahibi ve grubu için okuma (440)
+*   $CATALINA\_HOME/bin dizini altındaki sh uzantılı dosyalara, sahibi ve grubu için okuma ve çalıştırma (550)
 
-• $CATALINA\_HOME/bin dizini altındaki sh uzantılı dosyalara, sahibi ve grubu için
-
-okuma ve çalıştırma (550)
-
-• $CATALINA\_HOME/logs dizini (veya log dosyaları başka bir dizin altında tutuluyorsa)
-
-altındaki sadece log dosyalarına, sahibi için okuma ve grubu için okuma ve yazma
-
-(460) verilmelidir.
+*   $CATALINA\_HOME/logs dizini (veya log dosyaları başka bir dizin altında tutuluyorsa) altındaki sadece log dosyalarına, sahibi için okuma ve grubu için okuma ve yazma (460) verilmelidir.
 
     $ chown -R tomcat.tomcat /opt/tomcat
 
@@ -163,39 +149,39 @@ Lokal adresten dinleyen durdurma servisinin daha da güvenli hale getirilmesi i�
 
 Aşağıdaki değerler
 
-_&lt;Connector port=&quot;8080&quot; protocol=&quot;HTTP/1.1&quot;_
-
-_connectionTimeout=&quot;20000&quot;_
-
-_redirectPort=&quot;8443&quot; /&gt;_
-
-_…_
-
-_&lt;Server port=&quot;8005&quot; shutdown=&quot;SHUTDOWN&quot;&gt;_
-
-_…_
-
-_autoDeploy=&quot;true&quot;_
+> &lt;Connector port=&quot;8080&quot; protocol=&quot;HTTP/1.1&quot;
+>
+> connectionTimeout=&quot;20000&quot;
+>
+> redirectPort=&quot;8443&quot; /&gt;
+>
+>…
+>
+> &lt;Server port=&quot;8005&quot; shutdown=&quot;SHUTDOWN&quot;&gt;
+>
+>…
+>
+> autoDeploy=&quot;true&quot;
 
 Bu değerler ile değiştirilmeli
 
-_&lt;Connector port=&quot;8080&quot; protocol=&quot;HTTP/1.1&quot;_
-
-_connectionTimeout=&quot;20000&quot;_
-
-_xpoweredBy=&quot;false&quot;_
-
-_allowTrace=&quot;false&quot;_
-
-_redirectPort=&quot;8443&quot; /&gt;_
-
-_…_
-
-_&lt;Server port=&quot;-1&quot; shutdown=&quot;SHUTDOWN&quot;&gt;_
-
-_…_
-
-_autoDeploy=&quot;false&quot;_
+> &lt;Connector port=&quot;8080&quot; protocol=&quot;HTTP/1.1&quot;
+>
+> connectionTimeout=&quot;20000&quot;
+>
+> xpoweredBy=&quot;false&quot;
+>
+> allowTrace=&quot;false&quot;
+>
+> redirectPort=&quot;8443&quot; /&gt;
+>
+> …
+>
+> &lt;Server port=&quot;-1&quot; shutdown=&quot;SHUTDOWN&quot;&gt;
+>
+> …
+>
+> autoDeploy=&quot;false&quot;
 
 ## Varsayılı Hata Sayfası
 
@@ -219,162 +205,162 @@ Hata sayfasının eklenmesi;
 
     $ nano /opt/tomcat/conf/web.xml
 
-_&lt;error-page&gt;_
+> &lt;error-page&gt;
 
-_&lt;error-code&gt;400&lt;/error-code&gt;_
+> &lt;error-code&gt;400&lt;/error-code&gt;
 
-_&lt;location&gt;/error.jsp&lt;/location&gt;_
+> &lt;location&gt;/error.jsp&lt;/location&gt;
 
-_&lt;/error-page&gt;_
+> &lt;/error-page&gt;
 
-_&lt;error-page&gt;_
+> &lt;error-page&gt;
 
-_&lt;error-code&gt;401&lt;/error-code&gt;_
+> &lt;error-code&gt;401&lt;/error-code&gt;
 
-_&lt;location&gt;/error.jsp&lt;/location&gt;_
+> &lt;location&gt;/error.jsp&lt;/location&gt;
 
-_&lt;/error-page&gt;_
+> &lt;/error-page&gt;
 
-_&lt;error-page&gt;_
+> &lt;error-page&gt;
 
-_&lt;error-page&gt;_
+> &lt;error-page&gt;
 
-_&lt;error-code&gt;403&lt;/error-code&gt;_
+> &lt;error-code&gt;403&lt;/error-code&gt;
 
-_&lt;location&gt;/error.jsp&lt;/location&gt;_
+> &lt;location&gt;/error.jsp&lt;/location&gt;
 
-_&lt;/error-page&gt;_
+> &lt;/error-page&gt;
 
-_&lt;error-code&gt;404&lt;/error-code&gt;_
+> &lt;error-code&gt;404&lt;/error-code&gt;
 
-_&lt;location&gt;/error.jsp&lt;/location&gt;_
+> &lt;location&gt;/error.jsp&lt;/location&gt;
 
-_&lt;/error-page&gt;_
+> &lt;/error-page&gt;
 
-_&lt;error-page&gt;_
+> &lt;error-page&gt;
 
-_&lt;error-code&gt;405&lt;/error-code&gt;_
+> &lt;error-code&gt;405&lt;/error-code&gt;
 
-_&lt;location&gt;/error.jsp&lt;/location&gt;_
+> &lt;location&gt;/error.jsp&lt;/location&gt;
 
-_&lt;/error-page&gt;_
+> &lt;/error-page&gt;
 
-_&lt;error-page&gt;_
+> &lt;error-page&gt;
 
-_&lt;error-code&gt;410&lt;/error-code&gt;_
+> &lt;error-code&gt;410&lt;/error-code&gt;
 
-_&lt;location&gt;/error.jsp&lt;/location&gt;_
+> &lt;location&gt;/error.jsp&lt;/location&gt;
 
-_&lt;/error-page&gt;_
+> &lt;/error-page&gt;
 
-_&lt;error-page&gt;_
+> &lt;error-page&gt;
 
-_&lt;error-code&gt;411&lt;/error-code&gt;_
+> &lt;error-code&gt;411&lt;/error-code&gt;
 
-_&lt;location&gt;/error.jsp&lt;/location&gt;_
+> &lt;location&gt;/error.jsp&lt;/location&gt;
 
-_&lt;/error-page&gt;_
+> &lt;/error-page&gt;
 
-_&lt;error-page&gt;_
+> &lt;error-page&gt;
 
-_&lt;error-code&gt;412&lt;/error-code&gt;_
+> &lt;error-code&gt;412&lt;/error-code&gt;
 
-_&lt;location&gt;/error.jsp&lt;/location&gt;_
+> &lt;location&gt;/error.jsp&lt;/location&gt;
 
-_&lt;/error-page&gt;_
+> &lt;/error-page&gt;
 
-_&lt;error-page&gt;_
+> &lt;error-page&gt;
 
-_&lt;error-code&gt;413&lt;/error-code&gt;_
+> &lt;error-code&gt;413&lt;/error-code&gt;
 
-_&lt;location&gt;/error.jsp&lt;/location&gt;_
+> &lt;location&gt;/error.jsp&lt;/location&gt;
 
-_&lt;/error-page&gt;_
+> &lt;/error-page&gt;
 
-_&lt;error-page&gt;_
+> &lt;error-page&gt;
 
-_&lt;error-code&gt;408&lt;/error-code&gt;_
+> &lt;error-code&gt;408&lt;/error-code&gt;
 
-_&lt;location&gt;/error.jsp&lt;/location&gt;_
+> &lt;location&gt;/error.jsp&lt;/location&gt;
 
-_&lt;/error-page&gt;_
+> &lt;/error-page&gt;
 
-_&lt;error-page&gt;_
+> &lt;error-page&gt;
 
-_&lt;error-code&gt;500&lt;/error-code&gt;_
+> &lt;error-code&gt;500&lt;/error-code&gt;
 
-_&lt;location&gt;/error.jsp &lt;/error-page&gt;&lt;!-- Define a Security Constraint on this Application --&gt;_
+> &lt;location&gt;/error.jsp &lt;/error-page&gt;&lt;!-- Define a Security Constraint on this Application --&gt;
 
-_&lt;security-constraint&gt;_
+> &lt;security-constraint&gt;
 
-_&lt;web-resource-collection&gt;_
+> &lt;web-resource-collection&gt;
 
-_&lt;web-resource-name&gt;HTMLManger and Manager command&lt;/web-resource-name&gt;_
+> &lt;web-resource-name&gt;HTMLManger and Manager command&lt;/web-resource-name&gt;
 
-_&lt;url-pattern&gt;/jmxproxy/\*&lt;/url-pattern&gt;_
+> &lt;url-pattern&gt;/jmxproxy/\*&lt;/url-pattern&gt;
 
-_&lt;url-pattern&gt;/html/\*&lt;/url-pattern&gt;_
+> &lt;url-pattern&gt;/html/\*&lt;/url-pattern&gt;
 
-_&lt;url-pattern&gt;/list&lt;/url-pattern&gt;_
+> &lt;url-pattern&gt;/list&lt;/url-pattern&gt;
 
-_&lt;url-pattern&gt;/sessions&lt;/url-pattern&gt;_
+> &lt;url-pattern&gt;/sessions&lt;/url-pattern&gt;
 
-_&lt;url-pattern&gt;/start&lt;/url-pattern&gt;_
+> &lt;url-pattern&gt;/start&lt;/url-pattern&gt;
 
-_&lt;url-pattern&gt;/stop&lt;/url-pattern&gt;_
+> &lt;url-pattern&gt;/stop&lt;/url-pattern&gt;
 
-_&lt;url-pattern&gt;/install&lt;/url-pattern&gt;_
+> &lt;url-pattern&gt;/install&lt;/url-pattern&gt;
 
-_&lt;url-pattern&gt;/remove&lt;/url-pattern&gt;_
+> &lt;url-pattern&gt;/remove&lt;/url-pattern&gt;
 
-_&lt;url-pattern&gt;/deploy&lt;/url-pattern&gt;_
+> &lt;url-pattern&gt;/deploy&lt;/url-pattern&gt;
 
-_&lt;url-pattern&gt;/undeploy&lt;/url-pattern&gt;_
+> &lt;url-pattern&gt;/undeploy&lt;/url-pattern&gt;
 
-_&lt;url-pattern&gt;/reload&lt;/url-pattern&gt;_
+> &lt;url-pattern&gt;/reload&lt;/url-pattern&gt;
 
-_&lt;url-pattern&gt;/save&lt;/url-pattern&gt;_
+> &lt;url-pattern&gt;/save&lt;/url-pattern&gt;
 
-_&lt;url-pattern&gt;/serverinfo&lt;/url-pattern&gt;_
+> &lt;url-pattern&gt;/serverinfo&lt;/url-pattern&gt;
 
-_&lt;url-pattern&gt;/status/\*&lt;/url-pattern&gt;_
+> &lt;url-pattern&gt;/status/\*&lt;/url-pattern&gt;
 
-_&lt;url-pattern&gt;/roles&lt;/url-pattern&gt;_
+> &lt;url-pattern&gt;/roles&lt;/url-pattern&gt;
 
-_&lt;url-pattern&gt;/resources&lt;/url-pattern&gt;_
+> &lt;url-pattern&gt;/resources&lt;/url-pattern&gt;
 
-_&lt;/web-resource-collection&gt;_
+> &lt;/web-resource-collection&gt;
 
-_&lt;auth-constraint&gt;_
+> &lt;auth-constraint&gt;
 
-_&lt;role-name&gt;manager&lt;/role-name&gt;_
+> &lt;role-name&gt;manager&lt;/role-name&gt;
 
-_&lt;/auth-constraint&gt;_
+> &lt;/auth-constraint&gt;
 
-_&lt;/security-constraint&gt;_
+> &lt;/security-constraint&gt;
 
 ##Tomcat Servisinin Eklenmesi
 
     $ nano /etc/init.d/tomcat
     
-JAVA_HOME=/usr/java/jdk1.8.0_45
-export JAVA_HOME
-PATH=$JAVA_HOME/bin:$PATH
-export PATH
-CATALINA_HOME=/opt/tomcat/bin
-case $1 in
-start)
-/bin/su tomcat $CATALINA_HOME/startup.sh
-;;
-stop)
-/bin/su tomcat $CATALINA_HOME/shutdown.sh
-;;
-restart)
-/bin/su tomcat $CATALINA_HOME/shutdown.sh
-/bin/su tomcat $CATALINA_HOME/startup.sh
-;;
-esac
-exit 0
+> JAVA_HOME=/usr/java/jdk1.8.0_45
+> export JAVA_HOME
+> PATH=$JAVA_HOME/bin:$PATH
+> export PATH
+> CATALINA_HOME=/opt/tomcat/bin
+> case $1 in
+> start)
+> /bin/su tomcat $CATALINA_HOME/startup.sh
+> ;;
+> stop)
+> /bin/su tomcat $CATALINA_HOME/shutdown.sh
+> ;;
+> restart)
+> /bin/su tomcat $CATALINA_HOME/shutdown.sh
+> /bin/su tomcat $CATALINA_HOME/startup.sh
+> ;;
+> esac
+> exit 0
 
     $ chmod 755 /etc/init.d/tomcat
 
@@ -424,20 +410,20 @@ Sunucu konfügirasyonunda gereken değişikliklerin eklenmesi:
  
     $ nano /opt/tomcat/conf/server.xml
 
-<Connector port="8443"
-protocol="HTTP/1.1"
-maxThreads="150"
-xpoweredBy="false"
-allowTrace="false"
-SSLEnabled="true"
-scheme="https"
-secure="true"
-keystoreFile="/opt/tomcat/ssl/server.key"
-keystorePass="ComplexPassword"
-keyAlias="FQDN_Name"
-clientAuth="false"
-ciphers="TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384,TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384,TLS_ECDH_RSA_WITH_AES_256_GCM_SHA384,TLS_ECDH_ECDSA_WITH_AES_256_GCM_SHA384,TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256,TLS_ECDH_RSA_WITH_AES_128_GCM_SHA256,TLS_ECDH_ECDSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384,TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384,TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA,TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA,TLS_ECDH_RSA_WITH_AES_256_CBC_SHA384,TLS_ECDH_ECDSA_WITH_AES_256_CBC_SHA384,TLS_ECDH_RSA_WITH_AES_256_CBC_SHA,TLS_ECDH_ECDSA_WITH_AES_256_CBC_SHA,TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256,TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256,TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA,TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA,TLS_ECDH_RSA_WITH_AES_128_CBC_SHA256,TLS_ECDH_ECDSA_WITH_AES_128_CBC_SHA256,TLS_ECDH_RSA_WITH_AES_128_CBC_SHA,TLS_ECDH_ECDSA_WITH_AES_128_CBC_SHA,TLS_ECDHE_RSA_WITH_3DES_EDE_CBC_SHA,TLS_ECDHE_ECDSA_WITH_3DES_EDE_CBC_SHA,TLS_ECDH_RSA_WITH_3DES_EDE_CBC_SHA,TLS_ECDH_ECDSA_WITH_3DES_EDE_CBC_SHA"
-sslEnabledProtocols="TLSv1,TLSv1.1,TLSv1.2" />
+> <Connector port="8443"
+> protocol="HTTP/1.1"
+> maxThreads="150"
+> xpoweredBy="false"
+> allowTrace="false"
+> SSLEnabled="true"
+> scheme="https"
+> secure="true"
+> keystoreFile="/opt/tomcat/ssl/server.key"
+> keystorePass="ComplexPassword"
+> keyAlias="FQDN_Name"
+> clientAuth="false"
+> ciphers="TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384,TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384,TLS_ECDH_RSA_WITH_AES_256_GCM_SHA384,TLS_ECDH_ECDSA_WITH_AES_256_GCM_SHA384,TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256,TLS_ECDH_RSA_WITH_AES_128_GCM_SHA256,TLS_ECDH_ECDSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384,TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384,TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA,TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA,TLS_ECDH_RSA_WITH_AES_256_CBC_SHA384,TLS_ECDH_ECDSA_WITH_AES_256_CBC_SHA384,TLS_ECDH_RSA_WITH_AES_256_CBC_SHA,TLS_ECDH_ECDSA_WITH_AES_256_CBC_SHA,TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256,TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256,TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA,TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA,TLS_ECDH_RSA_WITH_AES_128_CBC_SHA256,TLS_ECDH_ECDSA_WITH_AES_128_CBC_SHA256,TLS_ECDH_RSA_WITH_AES_128_CBC_SHA,TLS_ECDH_ECDSA_WITH_AES_128_CBC_SHA,TLS_ECDHE_RSA_WITH_3DES_EDE_CBC_SHA,TLS_ECDHE_ECDSA_WITH_3DES_EDE_CBC_SHA,TLS_ECDH_RSA_WITH_3DES_EDE_CBC_SHA,TLS_ECDH_ECDSA_WITH_3DES_EDE_CBC_SHA"
+> sslEnabledProtocols="TLSv1,TLSv1.1,TLSv1.2" />
 
 PSWD yerine kendi şifrenizi giriniz.
 FQDN_Name yerine sunucu DNS ismini giriniz.
@@ -445,12 +431,12 @@ FQDN_Name yerine sunucu DNS ismini giriniz.
 web.xml'e eklenmesi:
     $ nano /opt/tomcat/conf/web.xml
     
-<user-data-constraint>
-<description>
-Constrain the user data transport for the whole application
-</description>
-<transport-guarantee>CONFIDENTIAL</transport-guarantee>
-</user-data-constraint>
+> <user-data-constraint>
+> <description>
+> Constrain the user data transport for the whole application
+> </description>
+> <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+> </user-data-constraint>
     
 web.app tag'i içerisinde olması gerekiyor.
 
@@ -458,7 +444,7 @@ web.app tag'i içerisinde olması gerekiyor.
 
 Aşşağıdaki parametreyi ekleyiniz.
 
-usehttponly="true"
+> usehttponly="true"
 
  HTTP (Port 8080TCP) internet erişimin verilmesi: 
 
