@@ -145,11 +145,11 @@ _server.built=Mar 23 2015 14:11:21 UTC_
 
 Bu değerler ile değiştirilmeli
 
-_server.infoerver.info= Secure Web server_
+_server.infoerver.info=Secure Web server_
 
-_ server.number= 1.0.0.0_
+_server.number=1.0.0.0_
 
-_server.built= Jan 01 2000 00:00:00 UTC_
+_server.built=Jan 01 2000 00:00:00 UTC_
 
     $ cd /opt/tomcat/lib
 
