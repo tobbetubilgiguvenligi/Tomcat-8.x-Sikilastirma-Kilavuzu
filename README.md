@@ -6,7 +6,7 @@
 
 ##Kurulum
 
-Hem Tomcat hem de Java ürün versiyonlarında son iki rakam bugfix açısından önemlidir. Bu rakamın yayınlanmış en son ürün ile aynı olması gerekmektedir.
+Hem Tomcat hem de Java ürün versiyonlarında son iki rakam bugfix açısından önemlidir. Bu rakamın yayınlanmış en son ürün ile aynı olması gerekmektedir. Assagıdaki işlemler için root kullanıcısı ile giriş yapılmalıdır.
 
 ### Yeni kullanıcı oluşturulması
 
