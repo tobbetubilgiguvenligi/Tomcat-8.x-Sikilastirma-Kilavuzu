@@ -159,7 +159,7 @@ _server.built=Jan 01 2000 00:00:00 UTC_
 
 Lokal adresten dinleyen durdurma servisinin daha da güvenli hale getirilmesi için, port attribute&#39;unun 8080&#39;den farklı (veya bu portu kapatmak için ‐1) ve shutdown attribute&#39;unun &quot;SHUTDOWN&quot;&#39;dan farklı olması gerekmektedir.
 
-$nano /opt/tomcat/conf/server.xml
+    $ nano /opt/tomcat/conf/server.xml
 
 Aşağıdaki değerler
 
