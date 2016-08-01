@@ -357,10 +357,6 @@ _&lt;/security-constraint&gt;_
 
     $ nano /etc/init.d/tomcat
     
-#!/bin/bash
-# description: Tomcat Start Stop Restart
-# processname: tomcat
-# chkconfig: 234 20 80
 JAVA_HOME=/usr/java/jdk1.8.0_45
 export JAVA_HOME
 PATH=$JAVA_HOME/bin:$PATH
