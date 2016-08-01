@@ -451,14 +451,15 @@ PSWD yerine kendi şifrenizi giriniz.
 FQDN_Name yerine sunucu DNS ismini giriniz.
 
 web.xml'e eklenmesi:
+
     $ nano /opt/tomcat/conf/web.xml
     
-> <user-data-constraint>
-> <description>
+> &lt;user-data-constraint&gt;
+> &lt;description&gt;
 > Constrain the user data transport for the whole application
-> </description>
-> <transport-guarantee>CONFIDENTIAL</transport-guarantee>
-> </user-data-constraint>
+> &lt;/description&gt;
+> &lt;transport-guarantee>CONFIDENTIAL</transport-guarantee&gt;
+> &lt;/user-data-constraint&gt;
     
 web.app tag'i içerisinde olması gerekiyor.
 
