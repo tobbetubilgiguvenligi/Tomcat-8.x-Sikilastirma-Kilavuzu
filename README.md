@@ -406,7 +406,7 @@ Sertifika isteği oluşturulması:
 
     $ /usr/java/jdk1.8.0_45/bin/keytool -import -keystore /opt/tomcat/ssl/server.key -storepass ComplexPassword -trustcacerts -file /opt/tomcat/ssl/server.crt
 
-Sunucu konfügirasyonunda gereken değişikliklerin eklenmesi:
+Sunucu konfigürasyonunda gereken değişikliklerin eklenmesi:
  
     $ nano /opt/tomcat/conf/server.xml
 
